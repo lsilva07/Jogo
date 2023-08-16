@@ -1,0 +1,107 @@
+#include <stdio.h>   //Biblioteca padrao de entrada e saida de dados
+#include <iostream>  //Iput= entrada; Out= saida; STREAM= fluxo; Biblioteca que trata o fluxo de entrada e saida
+#include <cstdlib>   //biblioteca com a função RAND de randon definida para sorteio
+#include <ctime>     //biblioteca relacionada a tempo no C
+using namespace std; // subtituiu o std das 3 linhas ao lado do endl e cout "std:: ..."
+
+int main()
+{
+    cout << "*************************************" << endl;
+    cout << "* Bem vindos ao jogo da advinhação! *" << endl;
+    cout << "*************************************" << endl;
+
+    cout << "Escolha o seu nivel de dificuldade" << endl;
+    cout << "Fácil (F), Médio (M) ou Difícil(D)" << endl;
+
+    char dificuldade;
+    cin >> dificuldade;
+
+    int numero_de_tentativas;
+
+    if (dificuldade == 'F')
+    {
+        numero_de_tentativas = 15;
+    }
+    else if (dificuldade == 'M')
+    {
+        numero_de_tentativas = 10;
+    }
+    else
+    {
+        numero_de_tentativas = 5;
+    }
+
+    // criar o char como variavel e o cin indica ele no console
+    // criar um int, if, else para numero de tentativas.
+
+    srand(time(NULL)); // essa função da o numero de segundos desde 1970 então ta sempre mudando
+    const int NUMERO_SECRETO = rand() % 100;
+
+    bool nao_acertou = true;
+    int tentativas = 0;
+
+    double pontos = 1000.0;
+
+    for (tentativas = 1; tentativas <= numero_de_tentativas; tentativas++)
+    { //(for começa e ele ta na primeira tent; esse for é para rodar em quanto tent for <= é para rodar; agora eu aumento em 1 o valor de tentativas com tentativas++ )
+        int chute;
+        cout << "tentativa" << tentativas << endl;
+        cout << "Qual seu chute? ";
+        cin >> chute;
+
+        double pontos_perdidos = abs(chute - NUMERO_SECRETO) / 2.0;
+        pontos = pontos - pontos_perdidos;
+
+        cout << "O valor do seu chute é: " << chute << endl;
+        bool acertou = chute == NUMERO_SECRETO;
+        bool maior = chute > NUMERO_SECRETO;
+
+        if (acertou)
+        {
+            cout << "Parabéns! Voce acertou o numero secreto!" << endl;
+            nao_acertou = false;
+            break;
+        }
+        else if (maior)
+        {
+            cout << "Seu chute foi maior que o numero secreto!" << endl;
+        }
+        else
+        {
+            cout << "Seu chute foi menor q o numero secreto!" << endl;
+        }
+    }
+    cout << "Fim de Jogo" << endl;
+    if (nao_acertou)
+    {
+        cout << "Voce perdeu! Tente novamente!" << endl;
+    }
+    else
+    {
+        cout << "Voce acertou o numero secreto em" << tentativas << "tentativas" << endl;
+        cout.precision(2);
+        cout << fixed;
+        cout << "Sua pontuação foi de:" << pontos << "pontos." << endl;
+    }
+}
+
+//
+//
+//(for começa e ele ta na primeira tent; esse for é para rodar em quanto tent for <= é para rodar; agora eu aumento em 1 o valor de tentativas com tentativas++ )
+// break quebra o laço de repetição e quebrou as tentativas infinitas
+// cout << fixed = numeros não saem na notação cientifica
+// cout.precision = poe casas depois da virgula de um numero, falando quantas casas quer
+// Em programas de compras se usa os numeros .00
+// Numeros com virgula não existem, a não ser q ponha ponto
+// doble guarda pontuação
+// tentativas ++ tentativas + 1
+// se for true q não_acertou, repete o chute;
+// while poe laços de repetição na tentativa.
+// criou uma const para não alterar ela no meio do caminho, ela fica unica.
+// bool declara se é true ou false;
+//"cin >> pegando da entrada e mandando para dentro do programa onde vou guardar ela. "
+//"cout = saida <<  setinha apontada do programa para fora"
+// cout imprime valores
+// cin traz uma caixa de texto para digitar. input no caso. recebe valores da entrada do terminal;
+//<<numero secreto<< é o valor dentro da frase que vai ser impressa;
+// endl pula a linha e deixa justificado;
